@@ -1,1 +1,13 @@
 #This script will define login using facial recognition using a one-to-one match
+
+#include "opencv/core/core.hpp"
+#include "opencv/contrib/contrib.hpp
+#include "opencv/highgui/highgui.hpp
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+using namespace cv;
+using namespace std;
+
