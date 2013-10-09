@@ -1,4 +1,4 @@
-#This script will define login using facial recognition using a one-to-one match
+//This script will define login using facial recognition using a one-to-one match
 
 #include "opencv/core/core.hpp"
 #include "opencv/contrib/contrib.hpp
@@ -17,16 +17,16 @@ int main(int, char**)
     if(!cap.isOpened())  // check if we succeeded
         return -1;
 
-    Mat edges;
-    namedWindow("edges",1);
+    Mat edges; //matrix "edges"
+    namedWindow("edges",1); //creates window for edges
     for(;;)
     {
-        Mat frame;
+        Mat frame; //matrix "frame"
         cap >> frame; // get a new frame from camera
-        cvtColor(frame, edges, CV_BGR2GRAY);
-        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
-        Canny(edges, edges, 0, 30, 3);
-        imshow("edges", edges);
+        cvtColor(frame, edges, CV_BGR2GRAY); //converts image color to grayscale 
+        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); //applies blur to image
+        Canny(edges, edges, 0, 30, 3); //edge detection using canny function
+        imshow("edges", edges); //displays results
         if(waitKey(30) >= 0) break;
     }
     // the camera will be deinitialized automatically in VideoCapture destructor
