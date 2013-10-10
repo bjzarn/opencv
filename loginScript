@@ -1,8 +1,10 @@
 //This script will define login using facial recognition using a one-to-one match
 
-#include "opencv/core/core.hpp"
-#include "opencv/contrib/contrib.hpp
-#include "opencv/highgui/highgui.hpp
+#include<opencv\core.hpp>
+#include<opencv\contrib.hpp>
+#include<opencv\highgui.hpp>
+#include<opencv\imgproc.hpp>
+#include<opencv\objdetect.hpp>
 
 #include <iostream>
 #include <fstream>
@@ -11,12 +13,25 @@
 using namespace cv;
 using namespace std;
 
+//Global Variables
+string face_cascade_name = "c:/haarcascade_frontalface_alt.xml";
+CascadeClassifier face_cascade;
+string window_name = "Facial Detection Login";
+int filenumber; //set the number of files to be saved
+string filename;
+
+//Main Function
 int main(int, char**)
 {
     VideoCapture cap(0); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
 		cerr << "Capture Device cannot be opened. Check device." << end1; //outputs error message if no capture device is found
         return -1; //ends program if no device is found
+        
+    if(!face_cascade.load(face_cascade_name)) //Loads the cascade
+    		cerr << "--Error Loading--" << end1; //Error message will be printed out if the cascade does not open
+    		return -1; //Ends program if the cascade is not started
+    		
 
     Mat edges; //matrix "edges"
     namedWindow("edges",1); //creates window for edges
