@@ -15,7 +15,8 @@ int main(int, char**)
 {
     VideoCapture cap(0); // open the default camera
     if(!cap.isOpened())  // check if we succeeded
-        return -1;
+		cerr << "Capture Device cannot be opened. Check device." << end1; //outputs error message if no capture device is found
+        return -1; //ends program if no device is found
 
     Mat edges; //matrix "edges"
     namedWindow("edges",1); //creates window for edges
@@ -23,12 +24,16 @@ int main(int, char**)
     {
         Mat frame; //matrix "frame"
         cap >> frame; // get a new frame from camera
-        cvtColor(frame, edges, CV_BGR2GRAY); //converts image color to grayscale 
+		Mat original = frame.clone(); //gets clone of current frame
+        cvtColor(frame, edges, CV_BGR2GRAY); //converts image color to grayscale
+		vector< Rect_<int> > faces; //finds faces in camera frame
+        haar_cascade.detectMultiScale(gray, faces); //converts frame faces to grayscale
         GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); //applies blur to image
         Canny(edges, edges, 0, 30, 3); //edge detection using canny function
         imshow("edges", edges); //displays results
         if(waitKey(30) >= 0) break;
     }
-    // the camera will be deinitialized automatically in VideoCapture destructor
     return 0;
 }
+
+//source sample found at http://docs.opencv.org/trunk/modules/contrib/doc/facerec/tutorial/facerec_video_recognition.html
